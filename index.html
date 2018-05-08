@@ -43,30 +43,32 @@
   <script type="text/javascript">
     $(document).on("click","button", function() {
       var animal = $(this).attr("data-animal");
-      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+      if (animal.length > 0) {
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         animal + "&api_key=dc6zaTOxFJmzC&limit=10";
 
-      $.ajax({
-        url: queryURL,
-        method: "GET"
-      }).then(function(response) {
-        results = response.data;
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).then(function(response) {
+          results = response.data;
 
-        for (var i = 0; i < 10; i++) {
-          var animalDiv = $("<div class='col-sm-3'>");
-          var p = $("<p>");
-          p.text(results[i].rating);
-          var animalImage = $("<img>");
-          animalImage.attr("src",results[i].images.fixed_height.url);
-          animalImage.attr('data-animate', results[i].images.fixed_height.url);
-          animalImage.attr('data-still', results[i].images.fixed_height_still.url);
-          animalImage.attr('data-state','moving');
-          animalDiv.append(p);
-          animalDiv.append(animalImage);
-          animalImage.addClass("picture");
-          $("#gifs-appear-here").prepend(animalDiv);
-        }
-      });
+          for (var i = 0; i < 10; i++) {
+            var animalDiv = $("<div class='col-sm-3'>");
+            var p = $("<p>");
+            p.text(results[i].rating);
+            var animalImage = $("<img>");
+            animalImage.attr("src",results[i].images.fixed_height.url);
+            animalImage.attr('data-animate', results[i].images.fixed_height.url);
+            animalImage.attr('data-still', results[i].images.fixed_height_still.url);
+            animalImage.attr('data-state','moving');
+            animalDiv.append(p);
+            animalDiv.append(animalImage);
+            animalImage.addClass("picture");
+            $("#gifs-appear-here").prepend(animalDiv);
+          }
+        });
+      }
     });
 // The document approach is required when classes are created dynamically. Basically, it asks the code to check the document again, to see if there have been any changes. THe document approach will work
     $(document).on("click",".picture", function() {
