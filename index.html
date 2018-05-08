@@ -78,15 +78,44 @@
       }
     });
 
+    var newNamesArray = [];
+
     $("#add-GIPHY").on("click", function(event){
       event.preventDefault();
-      var newName = $("#name-input").val();
-      var newTrueName = $("#trueName-input").val();
-      var newButton = $("<button>");
-      newButton.attr("data-animal",newName);
-      newButton.html(newTrueName);
+      var newName = {
+        name : $("#name-input").val().trim(),
+        trueName : $("#trueName-input").val().trim()
+      }
 
+      newNamesArray.push(newName);
+      renderButtons();
     });
+      // var newButton = $("<button>");
+      // newButton.attr("data-animal",newName);
+      // newButton.text(newTrueName);
+      // $("#newButtonPlace").append.newButton;
+
+    function renderButtons() {
+      //
+              // Deleting the movie buttons prior to adding new movie buttons
+              // (this is necessary otherwise we will have repeat buttons)
+        $("#newButtonPlace").empty();
+      //
+      //         // Looping through the array of movies
+          for (var i = 0; i < newNamesArray.length; i++) {
+            var a = $("<button>");
+      //           // Adding a class
+            a.addClass("movie");
+      //           // Adding a data-attribute with a value of the movie at index i
+            a.attr("data-animal", name[i]);
+      //           // Providing the button's text with a value of the movie at index i
+            a.text(trueName[i]);
+      //           // Adding the button to the HTML
+            $("#newButtonPlace").append(a);
+          }
+
+      renderButtons();
+    };
 
   </script>
 </body>
