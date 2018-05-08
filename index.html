@@ -21,6 +21,8 @@
     <button data-animal="capybara">BIG ground pigeon</button>
   </div>
 
+  <br>
+
   <div id="newButtonPlace"></div>
 
   <form>
@@ -103,18 +105,20 @@
       //
       //         // Looping through the array of movies
           for (var i = 0; i < newNamesArray.length; i++) {
+            var b = $("<div>");
             var a = $("<button>");
       //           // Adding a class
-            a.addClass("movie");
+            a.addClass("button");
       //           // Adding a data-attribute with a value of the movie at index i
-            a.attr("data-animal", name[i]);
+            a.attr("data-animal", newNamesArray[i].name);
       //           // Providing the button's text with a value of the movie at index i
-            a.text(trueName[i]);
+            a.text(newNamesArray[i].trueName);
       //           // Adding the button to the HTML
-            $("#newButtonPlace").append(a);
+            b.html(a);
+            $("#newButtonPlace").append(b);
           }
 
-      renderButtons();
+
     };
 
   </script>
