@@ -4,23 +4,42 @@
 <head>
   <meta charset="utf-8">
   <title>Animal Buttons</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 </head>
 
 <body>
-  <button data-animal="cat">meow</button>
-  <button data-animal="dog">woof</button>
-  <button data-animal="bird">chirp</button>
-  <button data-animal="red panda">raccoon cat</button>
-  <button data-animal="raccoon">trash panda</button>
-  <button data-animal="seagull">seaflapflap</button>
-  <button data-animal="pigeon">flaprat</button>
-  <button data-animal="nutria">big ground pigeon</button>
-  <button data-animal="capybara">BIG ground pigeon</button>
-  <div id="gifs-appear-here">
+  <div class="jumbotron text-center">
+    <h1>See! The True Name Revealed!</h1>
+    <h2>Click!</h2> Wonder at the Power of the True Name Revealed!
+  </div>
+  <div class="row">
+    <button data-animal="red panda">raccoon cat</button>
+    <button data-animal="raccoon">trash panda</button>
+    <button data-animal="seagull">seaflapflap</button>
+    <button data-animal="pigeon">flaprat</button>
+    <button data-animal="nutria">big ground pigeon</button>
+    <button data-animal="capybara">BIG ground pigeon</button>
+  </div>
+
+  <div id="newButtonPlace"></div>
+
+  <form>
+    <div class="form-group col-md-3">
+      <label for="name-input">Name:</label>
+      <input class="form-control" id="name-input" type="text">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="trueName-input">True Name:</label>
+      <input class="form-control" id="trueName-input" type="text">
+    </div>
+    <button class="btn btn-default" id="add-GIPHY" type="submit">NAME THY QUARRY!</button>
+  </form>
+
+  <div id="gifs-appear-here" class="row">
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript">
-    $("button").on("click", function() {
+    $(document).on("click","button", function() {
       var animal = $(this).attr("data-animal");
       var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         animal + "&api_key=dc6zaTOxFJmzC&limit=10";
@@ -29,34 +48,10 @@
         url: queryURL,
         method: "GET"
       }).then(function(response) {
-        // Step 1: Run this file, click a button, and see what the response object looks like in the browser's console.
-        // Open up the data key, then open up the 0th, element. Study the keys and how the JSON is structured.
-
-        console.log(response);
-
-
-
-        // Step 2: since the image information is inside of the data key,
-        // make a variable named results and set it equal to response.data
-
-        // =============== put step 2 in between these dashes ==================
         results = response.data;
-        // ========================
 
-
-        // Step 3: uncomment the for loop above and the closing curly bracket below.
-        // Make a div with jQuery and store it in a variable named animalDiv.
-        // Make a paragraph tag with jQuery and store it in a variable named p.
-        // Set the inner text of the paragraph to the rating of the image in results[i].
-        // Make an image tag with jQuery and store it in a variable named animalImage.
-        // Set the image's src to results[i]'s fixed_height.url.
-        // Append the p variable to the animalDiv variable.
-        // Append the animalImage variable to the animalDiv variable.
-        // Prepend the animalDiv variable to the element with an id of gifs-appear-here.
-
-        // ============= put step 3 in between these dashes ======================
-        for (var i = 0; i < results.length; i++) {
-          var animalDiv = $("<div>");
+        for (var i = 0; i < 10; i++) {
+          var animalDiv = $("<div class='col-sm-3'>");
           var p = $("<p>");
           p.text(results[i].rating);
           var animalImage = $("<img>");
@@ -69,11 +64,7 @@
           animalImage.addClass("picture");
           $("#gifs-appear-here").prepend(animalDiv);
         }
-        // ==================================
-        // }
-
       });
-
     });
 // The document approach is required when classes are created dynamically. Basically, it asks the code to check the document again, to see if there have been any changes. THe document approach will work
     $(document).on("click",".picture", function() {
@@ -85,6 +76,16 @@
         $(this).attr('src', $(this).attr('data-still'));
         $(this).attr('data-state','still');
       }
+    });
+
+    $("#add-GIPHY").on("click", function(event){
+      event.preventDefault();
+      var newName = $("#name-input").val();
+      var newTrueName = $("#trueName-input").val();
+      var newButton = $("<button>");
+      newButton.attr("data-animal",newName);
+      newButton.html(newTrueName);
+
     });
 
   </script>
